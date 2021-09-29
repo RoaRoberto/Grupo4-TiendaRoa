@@ -1,4 +1,6 @@
-# DESARROLLO-DE-SOFTWARE_GRUPO3
+# DESARROLLO-DE-SOFTWARE_GRUPO4-TIENDA DE MOTOS ROBERTO CONTRERAS ROA
+
+Proyecto web MVC que permite la venta de motos online mediante una pagina de tienda virtual
 
 ## Consideraciones Técnicas
 
