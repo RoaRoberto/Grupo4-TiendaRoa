@@ -2,7 +2,7 @@
 <html  xmlns:th="http://www.thymeleaf.org"
        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="headerfiles">
-    <title>Productos</title>
+    <title>Grupo 4</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="icon" type="img/png" th:href="@{https://www.thymeleaf.org/images/thymeleaf.png}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -11,7 +11,7 @@
 <body>
     <div th:fragment="nav">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
-            <a class="navbar-brand" href="#">Productos</a>
+            <a class="navbar-brand" href="#">Grupo 4</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -24,15 +24,26 @@
                     </li>
                     <li class="nav-item active" sec:authorize="isAuthenticated() && !hasRole('ROLE_ADMIN')">
                         <a class="nav-link" th:href="@{/producto/lista}">
-                            <i class="far fa-list-alt"></i> Lista</a>
+                            <i class="far fa-list-alt"></i> Productos</a>
+                    </li>
+                    <li class="nav-item active" sec:authorize="isAuthenticated() && !hasRole('ROLE_ADMIN')">
+                        <a class="nav-link" th:href="@{/usuario/lista}">
+                            <i class="far fa-list-alt"></i> Usuarios</a>
                     </li>
                     <li class="nav-item dropdown active" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-toolbox"></i> Administración
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/usuario/lista}">
+                                <i class="far fa-list-alt"></i> Usuarios</a>
                             <a class="dropdown-item" th:href="@{/producto/lista}">
-                                <i class="far fa-list-alt"></i> Lista</a>
+                                <i class="far fa-list-alt"></i> Productos</a>
+
+
+
+
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" th:href="@{/producto/nuevo}">
                                 <i class="fas fa-plus-circle"></i> Nuevo Producto</a>

@@ -16,27 +16,36 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    public List<Usuario> lista(){
+    public List<Usuario> lista() {
         return usuarioRepository.findAll();
     }
 
-    public Optional<Usuario> getById(int id){
+    public Optional<Usuario> getById(int id) {
         return usuarioRepository.findById(id);
     }
 
-    public Optional<Usuario> getByNombreUsuario(String nombreUsuario){
+    public Optional<Usuario> getByNombreUsuario(String nombreUsuario) {
         return usuarioRepository.findByNombreUsuario(nombreUsuario);
     }
 
-    public void save(Usuario usuario){
+    public void save(Usuario usuario) {
         usuarioRepository.save(usuario);
     }
 
-    public boolean existsById(int id){
+    public boolean existsById(int id) {
         return usuarioRepository.existsById(id);
     }
 
-    public boolean existsByNombreusuario(String nombreUsuario){
+    public boolean existsByNombreusuario(String nombreUsuario) {
         return usuarioRepository.existsByNombreUsuario(nombreUsuario);
     }
+
+    public List<Usuario> list() {
+        return usuarioRepository.findAll();
+    }
+
+    public void delete(int id) {
+        usuarioRepository.deleteById(id);
+    }
+
 }

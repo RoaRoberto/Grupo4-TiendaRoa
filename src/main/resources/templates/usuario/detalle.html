@@ -9,13 +9,13 @@
 <div class="container">
     <div class="card">
         <div class="card-header text-center">
-            Detalles del Producto
+            Detalles del usuario
         </div>
         <div class="card-body">
-            <h5 class="card-title" th:text="'Nombre: ' + ${producto.nombre}"></h5>
-            <p class="card-text" th:text="'Precio: ' + ${producto.precio} + ''"></p>
-            <p class="text-justify"><b>Descripción: </b>Este producto pertenece a tiendas Roa.</p>
-            <a th:href="@{/producto/lista}" class="btn btn-outline-info">
+            <h5 class="card-title" th:text="'Nombre completo: ' + ${usuario.nombreCompleto}"></h5>
+            <p class="card-text" th:text="'Cedula: ' + ${usuario.cedula} + ''"></p>
+            <p class="text-justify"><b>Descripción: </b>Este usuario pertenece a tiendas Roa.</p>
+            <a th:href="@{/usuario/lista}" class="btn btn-outline-info">
                 <i class="fas fa-arrow-circle-left"></i> Volver
             </a>
         </div>

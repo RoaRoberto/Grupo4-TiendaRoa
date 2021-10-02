@@ -14,19 +14,27 @@ public class UsuarioPrincipal implements UserDetails {
     private int id;
     private String nombreUsuario;
     private String password;
+    private String nombreCompleto;
+    private String cedula;
+    private String correo;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UsuarioPrincipal(int id, String nombreUsuario, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UsuarioPrincipal(int id, String nombreUsuario, String password, String nombreCompleto, String cedula,
+            String correo, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
         this.password = password;
+        this.nombreCompleto = nombreCompleto;
+        this.cedula = cedula;
+        this.correo = correo;
         this.authorities = authorities;
     }
 
-    public static UsuarioPrincipal build(Usuario usuario){
-        List<GrantedAuthority> authorities =
-                usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol.getRolNombre().name())).collect(Collectors.toList());
-        return new UsuarioPrincipal(usuario.getId(), usuario.getNombreUsuario(), usuario.getPassword(), authorities);
+    public static UsuarioPrincipal build(Usuario usuario) {
+        List<GrantedAuthority> authorities = usuario.getRoles().stream()
+                .map(rol -> new SimpleGrantedAuthority(rol.getRolNombre().name())).collect(Collectors.toList());
+        return new UsuarioPrincipal(usuario.getId(), usuario.getNombreUsuario(), usuario.getPassword(),
+                usuario.getNombreCompleto(), usuario.getCedula(), usuario.getCorreo(), authorities);
     }
 
     @Override
@@ -67,4 +75,29 @@ public class UsuarioPrincipal implements UserDetails {
     public int getId() {
         return id;
     }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
 }

@@ -8,11 +8,23 @@ import java.util.Set;
 
 @Entity
 public class Usuario {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotNull
+    private String nombreCompleto;
+
+    @NotNull
+    private String cedula;
+
+    @NotNull
+    private String correo;
+
     @NotNull
     @Column(unique = true)
     private String nombreUsuario;
+
     @NotNull
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -58,4 +70,29 @@ public class Usuario {
     public void setRoles(Set<Rol> roles) {
         this.roles = roles;
     }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
 }

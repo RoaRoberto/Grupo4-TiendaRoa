@@ -24,12 +24,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    AccessDeniedHandler accessDeniedHandler(){
+    AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
 
@@ -40,26 +40,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/", "/index", "/error", "/fragments", "/forbidden", "/login", "/usuario/registro")
-                .permitAll()
-                .antMatchers("/usuario/registrar")
-                .permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginProcessingUrl("/signin")
-                .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/index")
-                .usernameParameter("nombreUsuario")
-                .passwordParameter("password")
-                .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
-                .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout").permitAll()
-                .deleteCookies("JSESSIONID")
-                .and()
-                .rememberMe().tokenValiditySeconds(3600000).key("secret").rememberMeParameter("checkRememberMe");
+        http.authorizeRequests().antMatchers("/", "/index", "/error", "/fragments", "/forbidden", "/login").permitAll()
+                .antMatchers("/usuario/mantenimiento").permitAll().anyRequest().authenticated().and().formLogin()
+                .loginProcessingUrl("/signin").loginPage("/login").permitAll().defaultSuccessUrl("/index")
+                .usernameParameter("nombreUsuario").passwordParameter("password").and().exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler()).and().logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
+                .permitAll().deleteCookies("JSESSIONID").and().rememberMe().tokenValiditySeconds(3600000).key("secret")
+                .rememberMeParameter("checkRememberMe");
     }
 }
