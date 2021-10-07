@@ -12,8 +12,8 @@ public class Producto {
     private int id;
     @NotNull
     @Column(unique = true)
-    private String nombre;
     
+    private String nombre;
     private float precio;
 
     public Producto() {

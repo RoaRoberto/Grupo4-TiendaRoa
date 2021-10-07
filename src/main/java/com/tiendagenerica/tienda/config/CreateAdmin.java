@@ -27,9 +27,9 @@ public class CreateAdmin implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-       /*Usuario usuario = new Usuario();
-        String passwordEncoded = passwordEncoder.encode("admin");
-        usuario.setNombreUsuario("admin");
+      /*  Usuario usuario = new Usuario();
+        String passwordEncoded = passwordEncoder.encode("admin123456");
+        usuario.setNombreUsuario("admininicial");
         usuario.setPassword(passwordEncoded);
         Rol rolAdmin = rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get();
         Rol rolUser = rolService.getByRolNombre(RolNombre.ROLE_USER).get();

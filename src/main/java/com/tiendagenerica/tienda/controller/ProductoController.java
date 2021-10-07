@@ -24,7 +24,6 @@ public class ProductoController {
         mv.setViewName("/producto/lista");
         List<Producto> productos = productoService.list();
         mv.addObject("productos", productos);
-        System.out.println("hola mundo");
         return mv;
     }
 
