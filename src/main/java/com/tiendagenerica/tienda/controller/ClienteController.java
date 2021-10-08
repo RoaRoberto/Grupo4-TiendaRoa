@@ -14,8 +14,8 @@ import com.tiendagenerica.tienda.service.ClienteService;
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
-	
-	@Autowired
+
+    @Autowired
     ClienteService clienteService;
 
     @GetMapping("lista")
@@ -35,14 +35,15 @@ public class ClienteController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/guardar")
-    public ModelAndView crear(@RequestParam int cedula, @RequestParam String nombre, @RequestParam String direccion, @RequestParam  int telefono, @RequestParam String email) {
+    public ModelAndView crear(@RequestParam int cedula, @RequestParam String nombre, @RequestParam String direccion,
+            @RequestParam int telefono, @RequestParam String email) {
         ModelAndView mv = new ModelAndView();
         if (StringUtils.isBlank(nombre)) {
             mv.setViewName("cliente/nuevo");
             mv.addObject("error", "el nombre no puede estar vacío");
             return mv;
         }
-    
+
         if (clienteService.existsById(cedula)) {
             mv.setViewName("cliente/nuevo");
             mv.addObject("error", "CEDULA ya Registrada en el Sistema");
@@ -77,7 +78,8 @@ public class ClienteController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/actualizar")
-    public ModelAndView actualizar(@RequestParam int id, @RequestParam int cedula, @RequestParam String nombre, @RequestParam String direccion, @RequestParam  int telefono, @RequestParam String email) {
+    public ModelAndView actualizar(@RequestParam int id, @RequestParam int cedula, @RequestParam String nombre,
+            @RequestParam String direccion, @RequestParam int telefono, @RequestParam String email) {
         if (!clienteService.existsById(id))
             return new ModelAndView("redirect:/cliente/lista");
         ModelAndView mv = new ModelAndView();
@@ -88,14 +90,14 @@ public class ClienteController {
             mv.addObject("error", "el nombre no puede estar vacío");
             return mv;
         }
-        
+
         if (clienteService.existsByNombre(nombre) && clienteService.getByNombre(nombre).get().getId() != id) {
             mv.setViewName("cliente/editar");
             mv.addObject("error", "ese nombre ya existe");
             mv.addObject("cliente", cliente);
             return mv;
         }
-        
+
         cliente.setCedula(cedula);
         cliente.setNombre(nombre);
         cliente.setDireccion(direccion);

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments :: headerfiles">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<header th:insert="fragments :: nav"></header>
+
+<div class="container">
+   <div class="row">
+    <form method="POST" th:action="@{/producto/carga-archivo-csv}" enctype="multipart/form-data">
+        <div class="form-group mt-3">
+            <label for="file">Seleccione el archivo CSV</label>
+            <input type="file" name="archivo" class="form-control-file" id="file" accept=".csv">
+        </div>
+        <button type="submit" class="btn btn-primary">Importar Productos</button>
+    </form>
+   </div>
+</div>
+
+<footer th:insert="fragments :: footer"></footer>
+<div th:insert="fragments :: scripts"></div>
+</body>
+</html>
