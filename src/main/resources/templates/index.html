@@ -2,6 +2,7 @@
 <html  xmlns:th="http://www.thymeleaf.org"
        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="fragments :: headerfiles">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 <body>
 <header th:insert="fragments :: nav"></header>
@@ -9,10 +10,10 @@
 <div class="container">
     <div class="jumbotron">
         <h1 class="display-4" sec:authorize="!isAuthenticated()">Debes iniciar sesión</h1>
-        <h1 class="display-4" sec:authorize="isAuthenticated()">Vegetarian Shop <span sec:authentication="name"></span></h1>
+        <h1 class="display-4" sec:authorize="isAuthenticated()"> Usuario: <span sec:authentication="name"></span></h1>
         <p class="lead">Vegetarian Shop 4.</p>
         <hr class="my-4">
-        <!--<p>Roa</p>-->
+        <!--<p>VEGETARIAN SHOP</p>-->
         <!--<a class="btn btn-primary btn-lg" href="#" role="button">Leer mas</a>-->
     </div>
 </div>

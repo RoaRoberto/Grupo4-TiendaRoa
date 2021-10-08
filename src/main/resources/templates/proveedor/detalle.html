@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments :: headerfiles">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<header th:insert="fragments :: nav"></header>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header text-center">
+            Detalles del Proveedor
+        </div>
+        <div class="card-body">
+            <h5 class="card-title" th:text="'Nit: ' + ${proveedor.nit}"></h5>
+            <p class="card-text" th:text="'Nombre: ' + ${proveedor.nombre} + ''"></p>
+            <p class="card-text" th:text="'Direccion: ' + ${proveedor.direccion} + ''"></p>
+            <p class="card-text" th:text="'Telefono: ' + ${proveedor.telefono} + ''"></p>
+            <p class="card-text" th:text="'Ciudad: ' + ${proveedor.ciudad} + ''"></p>
+            <p class="text-justify"><b>Descripción: </b>Proveedor de Vegetarian Shop.</p>
+            <a th:href="@{/proveedor/lista}" class="btn btn-outline-info">
+                <i class="fas fa-arrow-circle-left"></i> Volver
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="fragments :: footer"></footer>
+<div th:insert="fragments :: scripts"></div>
+</body>
+</html>

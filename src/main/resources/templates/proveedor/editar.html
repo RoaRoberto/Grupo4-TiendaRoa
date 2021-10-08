@@ -10,35 +10,35 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4 mx-auto">
-            <h5 class="mb-4">Editar cliente</h5>
-            <form th:action="@{/cliente/actualizar}" method="post">
-                <input type="hidden" name="id" id="id" th:value="${cliente.id}">
+            <h5 class="mb-4">Editar proveedor</h5>
+            <form th:action="@{/proveedor/actualizar}" method="post">
+                <input type="hidden" name="id" id="id" th:value="${proveedor.id}">
 
                 <!-- control ataque csrf -->
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                 <!-- fin control ataque csrf -->
                 <div class="form-group">
-                    <label for="cedula">Cedula del Cliente</label>
-                    <input type="text" class="form-control" id="cedula" name="cedula" required="required" autocomplete="off" th:value="${cliente.cedula}">
+                    <label for="nit">Nit del Proveedor</label>
+                    <input type="text" class="form-control" id="nit" name="nit" required="required" autocomplete="off" th:value="${proveedor.nit}">
                 </div>
                 <div class="form-group">
-                    <label for="nombre">Nombre del Cliente</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" required="required" autocomplete="off" th:value="${cliente.nombre}">
-                </div>
-                
-                <div class="form-group">
-                    <label for="direccion">Direccion del Cliente</label>
-                    <input type="text" class="form-control" id="direccion" name="direccion" required="required" autocomplete="off" th:value="${cliente.direccion}">
+                    <label for="nombre">Nombre del Proveedor</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required="required" autocomplete="off" th:value="${proveedor.nombre}">
                 </div>
                 
                 <div class="form-group">
-                    <label for="telefono">Telefono del Cliente</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono" required="required" autocomplete="off" th:value="${cliente.telefono}">
+                    <label for="direccion">Direccion del Proveedor</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" required="required" autocomplete="off" th:value="${proveedor.direccion}">
                 </div>
                 
                 <div class="form-group">
-                    <label for="email">Email del Cliente</label>
-                    <input type="text" class="form-control" id="email" name="email" required="required" autocomplete="off" th:value="${cliente.email}">
+                    <label for="telefono">Telefono del Proveedor</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" required="required" autocomplete="off" th:value="${proveedor.telefono}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="ciudad">Ciudad del Proveedor</label>
+                    <input type="text" class="form-control" id="ciudad" name="ciudad" required="required" autocomplete="off" th:value="${proveedor.ciudad}">
                 </div>
                 
                 <div class="form-group">
@@ -46,7 +46,7 @@
                         <i class="fas fa-sync-alt"></i>Actualizar</button>
                 </div>
             </form>
-            <a th:href="@{/cliente/lista}" style="text-decoration: none;"><button class="btn btn-outline-info btn-block">
+            <a th:href="@{/proveedor/lista}" style="text-decoration: none;"><button class="btn btn-outline-info btn-block">
                 <i class="fas fa-arrow-circle-left"></i>Volver</button></a>
 
             <div th:if="${error}" class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
