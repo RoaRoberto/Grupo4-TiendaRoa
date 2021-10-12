@@ -102,7 +102,7 @@ Ejecute los siguientes script en una consola de la base de datos:
 
 ~~~sql
 	INSERT INTO rol ( rol_nombre) VALUES( 'ROLE_ADMIN');
-    INSERT INTO rol ( rol_nombre) VALUES( 'ROLE_USER');
+  INSERT INTO rol ( rol_nombre) VALUES( 'ROLE_USER');
 ~~~
 
 2. Crear Usuario Admin
