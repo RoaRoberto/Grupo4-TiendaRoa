@@ -17,6 +17,7 @@ public class Producto {
     private float precioCompra;
     private float precioVenta;
     private float ivaCompra;
+    private int cantidad;
 
     public Producto(int id, String nombre, String codigo, String nitProveedor, float precioCompra, float precioVenta,
             float ivaCompra) {
@@ -86,6 +87,14 @@ public class Producto {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
 }

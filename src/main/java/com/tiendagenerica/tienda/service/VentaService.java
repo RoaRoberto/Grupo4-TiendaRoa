@@ -24,9 +24,8 @@ public class VentaService {
         return ventaRepository.findById(id);
     }
 
-    public void save(Venta venta) {
-        ventaRepository.save(venta);
+    public Venta save(Venta venta) {
+        return ventaRepository.save(venta);
     }
-
 
 }

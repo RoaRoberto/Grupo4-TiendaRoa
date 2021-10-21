@@ -2,8 +2,6 @@ package com.tiendagenerica.tienda.entity;
 
 import javax.persistence.*;
 
-import com.sun.istack.NotNull;
-
 @Entity
 public class DetalleVenta {
 
@@ -11,15 +9,11 @@ public class DetalleVenta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-
-
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Venta venta;
 
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Producto producto;
-
-
 
 	private float iva;
 	private int cantidad;
@@ -54,9 +48,6 @@ public class DetalleVenta {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	
-	
 
 	public float getIva() {
 		return iva;
@@ -121,7 +112,5 @@ public class DetalleVenta {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
-
-	
 
 }
