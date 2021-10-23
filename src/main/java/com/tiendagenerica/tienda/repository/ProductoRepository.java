@@ -15,6 +15,6 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
     boolean existsByNombre(String nombre);
 
-    @Query(value = "select p.* from detalle_venta dv inner join producto p on dv.producto_id =p.id where dv.venta_id =:idVenta", nativeQuery = true)
+    @Query(value = "select p.id, p.codigo, p.iva_compra, p.nit_proveedor, p.nombre, p.precio_compra, p.precio_venta, dv.cantidad from detalle_venta dv inner join producto p on dv.producto_id =p.id where dv.venta_id =:idVenta", nativeQuery = true)
     Collection<Producto> getProductosVenta(@Param("idVenta") Integer idVenta);
 }

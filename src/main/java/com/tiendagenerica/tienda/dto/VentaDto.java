@@ -34,7 +34,7 @@ public class VentaDto {
     public void agregarItem(Producto producto) {
         ProductoParaVenderDto nuevoItem = new ProductoParaVenderDto(producto.getId(), producto.getNombre(),
                 producto.getCodigo(), producto.getNitProveedor(), producto.getPrecioCompra(), producto.getPrecioVenta(),
-                producto.getIvaCompra(), 1);
+                producto.getIvaCompra(), producto.getCantidad());
         detalleVenta.add(nuevoItem);
         calcularTotales();
     }
