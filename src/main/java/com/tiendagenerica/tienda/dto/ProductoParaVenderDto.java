@@ -8,7 +8,7 @@ public class ProductoParaVenderDto extends Producto {
 
     public ProductoParaVenderDto(int id, String nombre, String codigo, String nitProveedor, float precioCompra,
             float precioVenta, float ivaCompra, int cantidadVenta) {
-        super(id, nombre, codigo, nitProveedor, precioCompra, precioVenta, ivaCompra);
+        super(id, nombre, codigo, nitProveedor, precioCompra, precioVenta, ivaCompra, 0);
         this.cantidadVenta = cantidadVenta;
     }
 

@@ -17,7 +17,7 @@
             <p class="card-text" th:text="'Nombre: ' + ${cliente.nombre} + ''"></p>
             <p class="card-text" th:text="'Direccion: ' + ${cliente.direccion} + ''"></p>
             <p class="card-text" th:text="'Telefono: ' + ${cliente.telefono} + ''"></p>
-            <p class="card-text" th:text="'Email: ' + ${cliente.email} + ''"></p>
+            <p class="card-text" th:text="'Email: ' + ${cliente.correo} + ''"></p>
             <p class="text-justify"><b>Descripción: </b>Cliente Fidelizado con Vegetarian Shop.</p>
             <a th:href="@{/cliente/lista}" class="btn btn-outline-info">
                 <i class="fas fa-arrow-circle-left"></i> Volver
@@ -25,7 +25,7 @@
         </div>
     </div>
 </div>
-
+<div style="margin-bottom: 60px;"></div>
 <footer th:insert="fragments :: footer"></footer>
 <div th:insert="fragments :: scripts"></div>
 </body>

@@ -20,7 +20,7 @@ public class Producto {
     private int cantidad;
 
     public Producto(int id, String nombre, String codigo, String nitProveedor, float precioCompra, float precioVenta,
-            float ivaCompra) {
+            float ivaCompra, int cantidad) {
         this.id = id;
         this.nombre = nombre;
         this.codigo = codigo;
@@ -28,6 +28,7 @@ public class Producto {
         this.precioCompra = precioCompra;
         this.precioVenta = precioVenta;
         this.ivaCompra = ivaCompra;
+        this.cantidad = cantidad;
     }
 
     public Producto() {

@@ -76,7 +76,8 @@ public class ProductoController {
                     Producto productoEntidad = new Producto(0, itemProducto.getNombre(), itemProducto.getCodigo(),
                             itemProducto.getNitProveedor(), ValidadorUtil.priceConvert(itemProducto.getPrecioCompra()),
                             ValidadorUtil.priceConvert(itemProducto.getPrecioVenta()),
-                            ValidadorUtil.priceConvert(itemProducto.getIvaCompra()));
+                            ValidadorUtil.priceConvert(itemProducto.getIvaCompra()),
+                            Integer.parseInt(itemProducto.getCantidad()));
                     productoService.save(productoEntidad);
                 }
 
@@ -113,7 +114,7 @@ public class ProductoController {
             mv.addObject("error", "ese nombre ya existe");
             return mv;
         }
-        Producto producto = new Producto(0, nombre, "", "", precioCompra, 0, 19);
+        Producto producto = new Producto(0, nombre, "", "", precioCompra, 0, 19, 0);
         productoService.save(producto);
         mv.setViewName("redirect:/producto/lista");
         return mv;

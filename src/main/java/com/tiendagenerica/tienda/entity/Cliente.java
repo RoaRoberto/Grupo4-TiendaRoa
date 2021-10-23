@@ -8,7 +8,7 @@ public class Cliente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id = 0;
 	@NotNull
 	@Column(unique = true)
 
@@ -16,7 +16,7 @@ public class Cliente {
 	private String nombre;
 	private String direccion;
 	private int telefono;
-	private String email;
+	private String correo;
 
 	public Cliente() {
 
@@ -26,12 +26,12 @@ public class Cliente {
 		this.id = id;
 	}
 
-	public Cliente(int cedula, String nombre, String direccion, int telefono, String email) {
+	public Cliente(int cedula, String nombre, String direccion, int telefono, String correo) {
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.telefono = telefono;
-		this.email = email;
+		this.correo = correo;
 
 	}
 
@@ -75,12 +75,12 @@ public class Cliente {
 		this.telefono = telefono;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getCorreo() {
+		return correo;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCorreo(String correo) {
+		this.correo = correo;
 	}
 
 }

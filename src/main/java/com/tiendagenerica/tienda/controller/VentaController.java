@@ -56,40 +56,35 @@ public class VentaController {
     @GetMapping("crear")
     public String registro(Model model, HttpServletRequest request) {
         List<Producto> productos = productoService.list();
-        // model.addAttribute("venta", new Venta());
-        // model.addAttribute("detalleVenta", new DetalleVenta());
+        List<Cliente> clientes = clienteService.list();
         model.addAttribute("productos", productos);
-        model.addAttribute("producto", new Producto());
-        float total = 0;
-        ArrayList<ProductoParaVenderDto> carrito = this.obtenerCarrito(request);
-        for (ProductoParaVenderDto p : carrito)
-            total += p.getTotal();
-        model.addAttribute("total", total);
+        model.addAttribute("clientes", clientes);
+
+        VentaDto carrito = this.obtenerCarrito(request);
+        guardarCarrito(carrito, request);
         return "/venta/crear";
     }
 
-    private ArrayList<ProductoParaVenderDto> obtenerCarrito(HttpServletRequest request) {
-        ArrayList<ProductoParaVenderDto> carrito = (ArrayList<ProductoParaVenderDto>) request.getSession()
-                .getAttribute("carrito");
+    private VentaDto obtenerCarrito(HttpServletRequest request) {
+        VentaDto carrito = (VentaDto) request.getSession().getAttribute("carrito");
         if (carrito == null) {
-            carrito = new ArrayList<>();
+            carrito = new VentaDto();
         }
         return carrito;
     }
 
-    private void guardarCarrito(ArrayList<ProductoParaVenderDto> carrito, HttpServletRequest request) {
+    private void guardarCarrito(VentaDto carrito, HttpServletRequest request) {
         request.getSession().setAttribute("carrito", carrito);
     }
 
     private void limpiarCarrito(HttpServletRequest request) {
-        this.guardarCarrito(new ArrayList<>(), request);
+        this.guardarCarrito(new VentaDto(), request);
     }
 
     @PostMapping(value = "/agregar")
     public String agregarAlCarrito(@RequestParam String prodId, HttpServletRequest request,
             RedirectAttributes redirectAttrs) {
-        System.out.println(prodId);
-        ArrayList<ProductoParaVenderDto> carrito = this.obtenerCarrito(request);
+        VentaDto carrito = this.obtenerCarrito(request);
         Optional<Producto> productoBuscadoPorCodigo = productoService.getOne(Integer.parseInt(prodId));
 
         if (!productoBuscadoPorCodigo.isPresent()) {
@@ -105,7 +100,7 @@ public class VentaController {
         }
 
         boolean encontrado = false;
-        for (ProductoParaVenderDto productoParaVenderActual : carrito) {
+        for (ProductoParaVenderDto productoParaVenderActual : carrito.getDetalleVenta()) {
             if (productoParaVenderActual.getCodigo().equals(productoBuscadoPorCodigo.get().getCodigo())) {
                 productoParaVenderActual.aumentarCantidad();
                 encontrado = true;
@@ -113,22 +108,34 @@ public class VentaController {
             }
         }
         if (!encontrado) {
-            carrito.add(new ProductoParaVenderDto(productoBuscadoPorCodigo.get().getId(),
-                    productoBuscadoPorCodigo.get().getNombre(), productoBuscadoPorCodigo.get().getCodigo(),
-                    productoBuscadoPorCodigo.get().getNitProveedor(), productoBuscadoPorCodigo.get().getPrecioCompra(),
-                    productoBuscadoPorCodigo.get().getPrecioVenta(), productoBuscadoPorCodigo.get().getIvaCompra(), 1));
+            carrito.agregarItem(productoBuscadoPorCodigo.get());
         }
+        this.guardarCarrito(carrito, request);
+        return "redirect:/venta/crear/";
+    }
+
+    @PostMapping(value = "/seleccioncliente")
+    public String seleccionCliente(@RequestParam String clienteId, HttpServletRequest request,
+            RedirectAttributes redirectAttrs) {
+
+        Optional<Cliente> clienteBuscadoPorCodigo = clienteService.getOne(Integer.parseInt(clienteId));
+
+        if (!clienteBuscadoPorCodigo.isPresent()) {
+            redirectAttrs.addFlashAttribute("mensaje", "El cliente con el código " + clienteId + " no existe")
+                    .addFlashAttribute("clase", "warning");
+            return "redirect:/venta/crear/";
+        }
+        VentaDto carrito = this.obtenerCarrito(request);
+        carrito.setCliente(clienteBuscadoPorCodigo.get());
         this.guardarCarrito(carrito, request);
         return "redirect:/venta/crear/";
     }
 
     @PostMapping(value = "/quitar/{indice}")
     public String quitarDelCarrito(@PathVariable int indice, HttpServletRequest request) {
-        ArrayList<ProductoParaVenderDto> carrito = this.obtenerCarrito(request);
-        if (carrito != null && carrito.size() > 0 && carrito.get(indice) != null) {
-            carrito.remove(indice);
-            this.guardarCarrito(carrito, request);
-        }
+        VentaDto carrito = this.obtenerCarrito(request);
+        carrito.removerItem(indice);
+        this.guardarCarrito(carrito, request);
         return "redirect:/venta/crear/";
     }
 
@@ -141,21 +148,27 @@ public class VentaController {
 
     @PostMapping(value = "/terminar")
     public String terminarVenta(HttpServletRequest request, RedirectAttributes redirectAttrs) {
-        ArrayList<ProductoParaVenderDto> carrito = this.obtenerCarrito(request);
+        VentaDto carrito = this.obtenerCarrito(request);
         // Si no hay carrito o está vacío, regresamos inmediatamente
-        if (carrito == null || carrito.size() <= 0) {
+        if (carrito.estaVacio()) {
+            redirectAttrs.addFlashAttribute("mensaje", "Debe Agregar almenos un producto para continuar")
+                    .addFlashAttribute("clase", "warning");
             return "redirect:/venta/crear/";
         }
-        float total = 0f;
-        Date myDate = new Date();
-        String fecha = new SimpleDateFormat("yyyy-MM-dd").format(myDate);
-        for (ProductoParaVenderDto p : carrito)
-            total += p.getTotal();
-        Optional<Cliente> cliente = clienteService.getOne(1);
+        if (!carrito.tieneCliente()) {
+            redirectAttrs.addFlashAttribute("mensaje", "Debe seleccionar un cliente para continuar")
+                    .addFlashAttribute("clase", "warning");
+            return "redirect:/venta/crear/";
+        }
+
         Optional<Usuario> usuario = usuarioService.getById(1);
-        Venta v = ventaService.save(new Venta(0, usuario.get(), cliente.get(), total, fecha));
+        Optional<Cliente> cliente = clienteService.getOne(carrito.getCliente().getId());
+        Venta n = new Venta(usuario.get(), cliente.get(), carrito.getTotal(), carrito.getSubTotal(), carrito.getIva(),
+                carrito.getTotalIva(), carrito.getFechaFactura());
+        Venta nuevaVenta = ventaService.save(n);
+
         // Recorrer el carrito
-        for (ProductoParaVenderDto productoParaVender : carrito) {
+        for (ProductoParaVenderDto productoParaVender : carrito.getDetalleVenta()) {
             // Obtener el producto fresco desde la base de datos
             Producto p = productoService.getOne(productoParaVender.getId()).orElse(null);
             if (p == null)
@@ -165,8 +178,8 @@ public class VentaController {
             // Lo guardamos con la existencia ya restada
             productoService.save(p);
             // Creamos un nuevo detalleventa que será el que se guarda junto con la venta
-            DetalleVenta detalleVentaItem = new DetalleVenta(0, v, p, 0.19f, productoParaVender.getCantidadVenta(),
-                    productoParaVender.getPrecioVenta());
+            DetalleVenta detalleVentaItem = new DetalleVenta(0, nuevaVenta, p, 0.19f,
+                    productoParaVender.getCantidadVenta(), productoParaVender.getPrecioVenta());
             // Y lo guardamos
             detalleVentaService.save(detalleVentaItem);
         }

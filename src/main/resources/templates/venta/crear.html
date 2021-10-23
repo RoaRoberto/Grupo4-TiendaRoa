@@ -16,76 +16,169 @@
                 <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
                     th:text="${mensaje}" class="alert">
                 </div>
+                <div class="col-12">
+                    <form th:action="@{/venta/seleccioncliente}" method="post">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
 
-                <form th:action="@{/venta/agregar}" method="post">
+                                    <select name="clienteId" id="clienteId" class="form-control">
+                                        <option value="">Seleccione un cliente</option>
+                                        <th:block th:each="itemCliente:${clientes}">
+                                            <option th:value="${itemCliente.id}"
+                                                th:text="${itemCliente.id+' - '+itemCliente.nombre}">
+                                            </option>
+                                        </th:block>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary">&nbsp;<i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="col-12">
+                    <form th:action="@{/venta/agregar}" method="post">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+
+                                    <select name="prodId" id="prod" class="form-control">
+                                        <option value="">Seleccione un producto</option>
+                                        <th:block th:each="itemProd:${productos}">
+                                            <option th:value="${itemProd.id}"
+                                                th:text="${itemProd.id+' - '+itemProd.nombre}">
+                                            </option>
+                                        </th:block>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary">&nbsp;<i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+                <hr>
+
+                <hr>
+
+                <div class="table-responsive">
                     <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
+                        <div class="card col-md-12">
+                            <div class="card-header text-center">
+                                Detalles del Cliente
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered table-light">
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <td th:text="${session.carrito.cliente.nombre}"></td>
+                                        <th>Cedula</th>
+                                        <td th:text="${session.carrito.cliente.cedula}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Direccion</th>
+                                        <td th:text="${session.carrito.cliente.direccion}"></td>
+                                        <th>Telefono</th>
+                                        <td th:text="${session.carrito.cliente.telefono}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2">Email</th>
+                                        <td colspan="2" th:text="${session.carrito.cliente.correo}"></td>
 
-                                <select name="prodId" id="prod" class="form-control">
-                                    <option value="">Seleccione un producto</option>
-                                    <th:block th:each="itemProd:${productos}">
-                                        <option th:value="${itemProd.id}"
-                                            th:text="${itemProd.id+' - '+itemProd.nombre}">
-                                        </option>
-                                    </th:block>
-                                </select>
+                                    </tr>
+                                </table>
+
 
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-primary">&nbsp;<i class="fa fa-plus"></i>
-                            </button>
+                    </div>
+                    <div class="row">
+                        <div class="card col-md-12">
+                            <div class="card-header text-center">
+                                Productos agregados al carrito
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered table-light">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Código</th>
+                                            <th>Precio</th>
+                                            <th>Cantidad</th>
+                                            <th>Total</th>
+                                            <th>Quitar de lista</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="producto, iterador : ${session.carrito.detalleVenta}">
+                                            <td th:text="${producto.nombre}"></td>
+                                            <td th:text="${producto.codigo}"></td>
+                                            <td th:text="${producto.precioVenta}"></td>
+                                            <td th:text="${producto.cantidadVenta}"></td>
+                                            <td th:text="${producto.total}"></td>
+                                            <td>
+                                                <form th:action="@{/venta/quitar/} + ${iterador.index}" method="post">
+                                                    <button type="submit" class="btn btn-danger"><i
+                                                            class="fa fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
 
-                </form>
-                <hr>
-                <form class="mb-2" th:action="@{/venta/terminar}" method="post">
-
                     <div class="row">
-                        <button type="submit" class="btn btn-success">Finalizar Venta&nbsp;<i class="fa fa-check"></i>
-                        </button>
-                        <a th:href="@{/venta/limpiar}" class="btn btn-danger">Cancelar venta&nbsp;<i
-                                class="fa fa-trash"></i>
-                        </a>
+                        <!-- <h1 th:text="${'Total: ' + session.carrito.total}"></h1> -->
+                        <table class="table table-bordered table-dark">
+                            <tr>
+                                <th>SubTotal</th>
+                                <td th:text="${'$ '+session.carrito.subTotal}"></td>
+                                <th>Iva</th>
+                                <td th:text="${(session.carrito.iva*100)+'%'}"></td>
+                            </tr>
+                            <tr>
+                                <th>SubTotal+Iva</th>
+                                <td th:text="${'$ '+session.carrito.totalIva}"></td>
+                                <th>Total</th>
+                                <td th:text="${'$ '+session.carrito.total}"></td>
+                            </tr>
+
+                        </table>
                     </div>
 
-                </form>
-                <hr>
-                <h1 th:text="${'Total: ' + total}"></h1>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Código</th>
-                                <th>Precio</th>
-                                <th>Cantidad</th>
-                                <th>Total</th>
-                                <th>Quitar de lista</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="producto, iterador : ${session.carrito}">
-                                <td th:text="${producto.nombre}"></td>
-                                <td th:text="${producto.codigo}"></td>
-                                <td th:text="${producto.precioVenta}"></td>
-                                <td th:text="${producto.cantidadVenta}"></td>
-                                <td th:text="${producto.total}"></td>
-                                <td>
-                                    <form th:action="@{/venta/quitar/} + ${iterador.index}" method="post">
-                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="row">
+                        <form class="mb-2" th:action="@{/venta/terminar}" method="post">
+                            <button type="submit" class="btn btn-success">Finalizar Venta&nbsp;<i
+                                    class="fa fa-check"></i>
+                            </button>
+                            <a th:href="@{/venta/limpiar}" class="btn btn-danger">Cancelar venta&nbsp;<i
+                                    class="fa fa-trash"></i>
+                            </a>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <a th:href="@{/venta/lista}" style="text-decoration: none;"><button
+                                class="btn btn-outline-info btn-block">
+                                <i class="fas fa-arrow-circle-left"></i>Volver</button></a>
+                    </div>
+
                 </div>
-                <a th:href="@{/venta/lista}" style="text-decoration: none;"><button class="btn btn-outline-info btn-block">
-                    <i class="fas fa-arrow-circle-left"></i>Volver</button></a>
             </div>
         </div>
     </div>

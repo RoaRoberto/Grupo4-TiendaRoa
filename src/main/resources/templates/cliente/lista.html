@@ -36,7 +36,7 @@
                         <td th:text="${cliente.nombre}"></td>
                         <td th:text="${cliente.direccion}"></td>
                         <td th:text="${cliente.telefono}"></td>
-                        <td th:text="${cliente.email}"></td>
+                        <td th:text="${cliente.correo}"></td>
                         <td><a th:href="@{'/cliente/detalle/' + ${cliente.id}}"><button
                                     class="btn btn-outline-primary"><i class="far fa-eye"></i></button></a></td>
                         <td sec:authorize="hasRole('ROLE_ADMIN')"><a
@@ -52,7 +52,7 @@
         </div>
 
     </div>
-
+    <div style="margin-bottom: 60px;"></div>
     <footer th:insert="fragments :: footer"></footer>
     <div th:insert="fragments :: scripts"></div>
 </body>

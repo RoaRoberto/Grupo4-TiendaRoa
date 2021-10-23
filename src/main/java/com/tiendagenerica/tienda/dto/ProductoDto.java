@@ -23,6 +23,9 @@ public class ProductoDto {
     @CsvBindByPosition(position = 5)
     private String precioVenta;
 
+    @CsvBindByPosition(position = 6)
+    private String cantidad;
+
     public ProductoDto(String nombre, String codigo, String nitProveedor, String precioCompra, String precioVenta,
             String ivaCompra) {
         this.nombre = nombre;
@@ -82,6 +85,14 @@ public class ProductoDto {
 
     public void setIvaCompra(String ivaCompra) {
         this.ivaCompra = ivaCompra;
+    }
+
+    public String getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
     }
 
 }
