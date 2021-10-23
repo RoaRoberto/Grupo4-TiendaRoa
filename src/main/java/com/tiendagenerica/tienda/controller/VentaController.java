@@ -136,6 +136,7 @@ public class VentaController {
             }
         }
         if (!encontrado) {
+            productoBuscadoPorCodigo.get().setCantidad(1);
             carrito.agregarItem(productoBuscadoPorCodigo.get());
         }
         this.guardarCarrito(carrito, request);
