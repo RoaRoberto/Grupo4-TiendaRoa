@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -65,6 +66,27 @@ public class VentaController {
         return "/venta/crear";
     }
 
+    @GetMapping("/detalle/{id}")
+    public ModelAndView detalle(@PathVariable("id") int id) {
+
+        Optional<Venta> ventaOpt = ventaService.getById(id);
+
+        if (!ventaOpt.isPresent())
+            return new ModelAndView("redirect:/venta/lista");
+
+        VentaDto venta = new VentaDto();
+        venta.setCliente(ventaOpt.get().getCliente());
+
+        Collection<Producto> productos = productoService.getProductosVenta(ventaOpt.get().getId());
+        for (Producto item : productos) {
+            venta.agregarItem(item);
+        }
+
+        ModelAndView mv = new ModelAndView("/venta/detalle");
+        mv.addObject("venta", venta);
+        return mv;
+    }
+
     private VentaDto obtenerCarrito(HttpServletRequest request) {
         VentaDto carrito = (VentaDto) request.getSession().getAttribute("carrito");
         if (carrito == null) {
@@ -84,6 +106,12 @@ public class VentaController {
     @PostMapping(value = "/agregar")
     public String agregarAlCarrito(@RequestParam String prodId, HttpServletRequest request,
             RedirectAttributes redirectAttrs) {
+
+        if (prodId == "") {
+            redirectAttrs.addFlashAttribute("mensaje", "El producto no existe").addFlashAttribute("clase", "warning");
+            return "redirect:/venta/crear/";
+        }
+
         VentaDto carrito = this.obtenerCarrito(request);
         Optional<Producto> productoBuscadoPorCodigo = productoService.getOne(Integer.parseInt(prodId));
 
@@ -117,7 +145,10 @@ public class VentaController {
     @PostMapping(value = "/seleccioncliente")
     public String seleccionCliente(@RequestParam String clienteId, HttpServletRequest request,
             RedirectAttributes redirectAttrs) {
-
+        if (clienteId == "") {
+            redirectAttrs.addFlashAttribute("mensaje", "El cliente  no existe").addFlashAttribute("clase", "warning");
+            return "redirect:/venta/crear/";
+        }
         Optional<Cliente> clienteBuscadoPorCodigo = clienteService.getOne(Integer.parseInt(clienteId));
 
         if (!clienteBuscadoPorCodigo.isPresent()) {

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:insert="fragments :: headerfiles">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+    <header th:insert="fragments :: nav"></header>
+
+    <div class="container">
+        <div class="table-responsive">
+            <div class="row">
+                <div class="card col-md-12">
+                    <div class="card-header text-center">
+                        Detalles del Cliente
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-light">
+                            <tr>
+                                <th>Nombre</th>
+                                <td th:text="${venta.cliente.nombre}"></td>
+                                <th>Cedula</th>
+                                <td th:text="${venta.cliente.cedula}"></td>
+                            </tr>
+                            <tr>
+                                <th>Direccion</th>
+                                <td th:text="${venta.cliente.direccion}"></td>
+                                <th>Telefono</th>
+                                <td th:text="${venta.cliente.telefono}"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">Email</th>
+                                <td colspan="2" th:text="${venta.cliente.correo}"></td>
+
+                            </tr>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card col-md-12">
+                    <div class="card-header text-center">
+                        Productos agregados al carrito
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-light">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Código</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="producto, iterador : ${venta.detalleVenta}">
+                                    <td th:text="${producto.nombre}"></td>
+                                    <td th:text="${producto.codigo}"></td>
+                                    <td th:text="${producto.precioVenta}"></td>
+                                    <td th:text="${producto.cantidadVenta}"></td>
+                                    <td th:text="${producto.total}"></td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <!-- <h1 th:text="${'Total: ' + venta.total}"></h1> -->
+                <table class="table table-bordered table-dark">
+                    <tr>
+                        <th>SubTotal</th>
+                        <td th:text="${'$ '+venta.subTotal}"></td>
+                        <th>Iva</th>
+                        <td th:text="${(venta.iva*100)+'%'}"></td>
+                    </tr>
+                    <tr>
+                        <th>SubTotal+Iva</th>
+                        <td th:text="${'$ '+venta.totalIva}"></td>
+                        <th>Total</th>
+                        <td th:text="${'$ '+venta.total}"></td>
+                    </tr>
+
+                </table>
+            </div>
+
+
+
+            <a th:href="@{/venta/lista}" style="text-decoration: none;"><button class="btn btn-outline-info btn-block">
+                    <i class="fas fa-arrow-circle-left"></i>Volver</button></a>
+
+
+        </div>
+    </div>
+    <div style="margin-bottom: 60px;"></div>
+    <footer th:insert="fragments :: footer"></footer>
+    <div th:insert="fragments :: scripts"></div>
+</body>
+
+</html>

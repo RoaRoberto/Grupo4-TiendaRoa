@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:insert="fragments :: headerfiles">
 </head>
@@ -20,28 +19,28 @@
 						<a th:href="@{/reporte/ReporteUsuario}" style="text-decoration: none;"><button
 								class="btn btn-outline-primary btn-block">
 								<i class="fas fa-id-badge"></i> Listado de Usuarios
-							</button></a> <br> <a th:href="@{/reporte/ReporteCliente}"
-							style="text-decoration: none;"><button
-								class="btn btn-outline-info btn-block">
+							</button></a> 
+							<br> 
+							<a th:href="@{/reporte/ReporteCliente}"
+							style="text-decoration: none;"><button class="btn btn-outline-info btn-block">
 								<i class="fas fa-address-book"></i> Listado de Clientes
-							</button></a> <br> <a th:href="@{/reporte/ReporteVentasPorCliente}"
-							style="text-decoration: none;"><button
-								class="btn btn-outline-primary btn-block">
+							</button></a> 
+							<br> 
+							<!-- <a th:href="@{/reporte/ReporteVentasPorCliente}"
+							style="text-decoration: none;"><button class="btn btn-outline-primary btn-block">
 								<i class="fa fa-cart-arrow-down"></i> Ventas por clientes
-							</button></a> <br> <a th:href="@{/}">
-							<button type="button" th:href="@{/}"
-								class="btn btn-outline-danger btn-block">
+							</button></a>
+							 <br>  -->
+							 <a th:href="@{/}">
+							<button type="button" th:href="@{/}" class="btn btn-outline-danger btn-block">
 								<i class="fas fa-reply-all"></i> Volver al menu
 							</button>
 						</a>
 					</div>
 				</div>
-				<div th:if="${error}"
-					class="alert alert-danger alert-dismissible fade show mt-2"
-					role="alert">
+				<div th:if="${error}" class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
 					<p th:text="${error}"></p>
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -53,4 +52,4 @@
 	<div th:insert="fragments :: scripts"></div>
 </body>
 
-</html> 
+</html>
