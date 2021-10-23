@@ -7,10 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import com.tiendagenerica.tienda.entity.Cliente;
 
-
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
-	Optional<Cliente> findByNombre(String nombre);
+    Optional<Cliente> findByNombre(String nombre);
+
     boolean existsByNombre(String nombre);
+
+    boolean existsByCedula(String cedula);
 
 }

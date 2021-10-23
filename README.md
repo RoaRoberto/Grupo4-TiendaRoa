@@ -125,6 +125,12 @@ Ejecute los siguientes script en una consola de la base de datos:
    usuario: admininicial
    contraseña: admin123456
 
+### Generar el .war para publicacion
+corre el siguiente comando
+
+~~~
+ ./mvnw package -Dmaven.test.skip
+~~~
 
 ### CSV
 Se creo un modulo para cargar productos masivamente, para esto se debe navegar hasta la ruta productos , seleccionar cargar CSV y realizar la carga de un archivo  CSV con la informacion de los productos, como insumo se puede encontrar un archivo de ejemplo dentro de la carpeta documentos de este proyecto.

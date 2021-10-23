@@ -35,8 +35,8 @@ public class ClienteController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/guardar")
-    public ModelAndView crear(@RequestParam int cedula, @RequestParam String nombre, @RequestParam String direccion,
-            @RequestParam int telefono, @RequestParam String correo) {
+    public ModelAndView crear(@RequestParam String cedula, @RequestParam String nombre, @RequestParam String direccion,
+            @RequestParam String telefono, @RequestParam String correo) {
         ModelAndView mv = new ModelAndView();
         if (StringUtils.isBlank(nombre)) {
             mv.setViewName("cliente/nuevo");
@@ -44,7 +44,7 @@ public class ClienteController {
             return mv;
         }
 
-        if (clienteService.existsById(cedula)) {
+        if (clienteService.existsByCedula(cedula)) {
             mv.setViewName("cliente/nuevo");
             mv.addObject("error", "CEDULA ya Registrada en el Sistema");
             return mv;
@@ -78,8 +78,8 @@ public class ClienteController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/actualizar")
-    public ModelAndView actualizar(@RequestParam int id, @RequestParam int cedula, @RequestParam String nombre,
-            @RequestParam String direccion, @RequestParam int telefono, @RequestParam String correo) {
+    public ModelAndView actualizar(@RequestParam int id, @RequestParam String cedula, @RequestParam String nombre,
+            @RequestParam String direccion, @RequestParam String telefono, @RequestParam String correo) {
         if (!clienteService.existsById(id))
             return new ModelAndView("redirect:/cliente/lista");
         ModelAndView mv = new ModelAndView();
